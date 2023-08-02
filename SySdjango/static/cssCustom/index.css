@@ -31,3 +31,10 @@ body {
     align-items: center;
     justify-content: center;
  }
+
+ #textoForm {
+    display: flex;
+    justify-content: center;
+ }
+
+

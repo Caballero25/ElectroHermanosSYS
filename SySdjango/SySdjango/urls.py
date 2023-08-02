@@ -20,6 +20,7 @@ from .User import views as userViews
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', userViews.registro, name='registro'),
+    path('', userViews.index, name='index'),
+    path('registro/', userViews.registro, name='registro'),
     path('app/', userViews.app, name='app'),
 ]
