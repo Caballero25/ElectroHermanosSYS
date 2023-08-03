@@ -1,0 +1,40 @@
+body {
+    background-color: #F6F1F1;
+}
+
+#presentacion{
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#imagenSYS {
+    height: 200px;
+    border-radius: 80px;
+}
+
+#textIndex {
+    padding: 5px;
+    font-style: italic;
+}
+
+#formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+ #formulario button {
+    align-items: center;
+    justify-content: center;
+ }
+
+ #textoForm {
+    display: flex;
+    justify-content: center;
+ }
+
+
