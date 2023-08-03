@@ -4,20 +4,11 @@ from random import randrange
 
 # Create your views here.
 
-def grafico(request):
-    return render(request, 'graficos.html')
-
 def get_chart(_request):
 
-    colors = ['blue', 'orange', 'red', 'yellow', 'green']
-    random_color = colors[randrange(0, (len(colors)-1))]
+    color = 'green'
 
-    serie = []
-    counter = 0
-
-    while(counter<7):
-        serie.append(randrange(100,400))
-        counter += 1
+    serie = [122, 170, 250, 300, 150, 170, 200]
 
     chart = {
         'tooltip': {
@@ -41,10 +32,10 @@ def get_chart(_request):
                 'data':serie,
                 'type': "line",
                 'itemStyle': {
-                    'color': random_color,  
+                    'color': color,  
                 },
                 'lineStyle': {
-                    'color': random_color
+                    'color': color,
                 }
             }
         ]
