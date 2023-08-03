@@ -1,0 +1,22 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link type='text/css' rel="stylesheet" href='{% static "cssCustom/graficos.css" %}'>
+</head>
+<body>
+    <div class="container">
+        <div class="row my-4">
+            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto">
+                <div id="chart" class="chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    <script src='{% static "js/graficos.js" %}'></script>
+</body>
+</html>

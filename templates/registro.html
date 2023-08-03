@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link type='text/css' rel="stylesheet" href='{% static "cssCustom/index.css" %}'>
+    <link rel="icon" href='{% static "img/logoSYS.png" %}' type="image/x-icon">
+</head>
+
+<body>
+    <div id="presentacion">
+        <div id="imagenSYS">
+            <img id="imagenSYS" src='{% static "img/sysINDEX.jpg" %}' class="img-fluid border border-primary" alt="...">
+        </div>
+        <div id="textIndex">
+            El verdadero progreso es el que pone la tecnología al alcance de todos
+        </div>
+    </div>
+    <hr>
+
+
+    <div id="formulario">
+        <div class="container col-xl-4 col-xl-4 col-md-6 col-sm-4 col-sm-12" >
+            <h2 id="textoForm">Registrate</h2>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+                <div class="mb-3">
+                    <label for="inputEmail" class="form-label">Email</label>
+                    <input name="email" type="email" class="form-control" id="inputEmail" placeholder="example@electroSYS.com">
+                </div>
+                <div class="mb-3">
+                    <label for="inputNames" class="form-label">Nombres</label>
+                    <input name="username" type="text" class="form-control" id="inputNames" placeholder="Ingresa tus nombres">
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Contraseña</label>
+                    <input name="password1" type="password" class="form-control" id="inputPassword" placeholder="Ingresa tu contraseña">
+                </div>
+                <div class="mb-3">
+                    <label for="inputPassword" class="form-label">Repite la contraseña</label>
+                    <input name="password2" type="password" class="form-control" id="inputPassword" placeholder="Ingresa tu contraseña nuevamente">
+                </div>
+                <div id="presentacion">
+                    <button type="submit" class="btn btn-primary position-relative py-2 px-4" name="datosPrincipales">Registrar</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
