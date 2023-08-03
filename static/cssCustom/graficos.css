@@ -3,6 +3,18 @@ body {
 }
 
 .chart {
-    width: 100%;
-    min-height: 400px;
+    
+    min-height: 380px;
 }
+
+.contenedor-desplazable {
+    padding-top: 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-height: 750px; /* Altura máxima visible en pantalla */
+    overflow: auto; /* Habilita el desplazamiento si el contenido excede la altura */
+    border: 1px solid #ccc; /* Puedes agregar un borde para claridad visual */
+  }

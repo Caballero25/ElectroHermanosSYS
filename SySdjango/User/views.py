@@ -110,7 +110,7 @@ def registro(request):
                 return redirect('app')       
             
 def app(request):
-    opciones = ['INVENTARIO', 'DISTRIBUIDORES', 'EMPLEADOS', 'VENTAS', 'PEDIDOS']
+    opciones = ['INVENTARIO', 'DISTRIBUIDORES', 'EMPLEADOS', 'VENTAS', 'PEDIDOS', 'INVENTARIO', 'DISTRIBUIDORES', 'EMPLEADOS', 'VENTAS', 'PEDIDOS',]
     longitud = len(opciones)  
     
     return render(request, 'app.html', {'opciones': opciones, 'longitud': longitud})
