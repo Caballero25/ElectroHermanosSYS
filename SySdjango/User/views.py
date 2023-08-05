@@ -47,14 +47,14 @@ def registro(request):
                 return render(request, 'registro.html', {'error': "Los datos del formulario no pueden estar vacíos"})
             else:
                 if password1 != password2:
-                    return render(request, 'inderegistro.html', {'error': "Las contraseñas ingresadas no coinciden"})
+                    return render(request, 'registro.html', {'error': "Las contraseñas ingresadas no coinciden"})
                 else:
                     if not email.endswith("@gmail.com") or any(digit.isspace() for digit in email):
-                        return render(request, 'inderegistro.html', {'error': "El email debe ser dominio '@gmail.com' y no debe contener espacios"})
+                        return render(request, 'registro.html', {'error': "El email debe ser dominio '@gmail.com' y no debe contener espacios"})
                     elif len(username) < 4 or not username[0].isupper(): 
-                        return render(request, 'inderegistro.html', {'error': "El nombre de usuario debe contener al menos 4 carácteres y la primer letra en mayúscula"})
+                        return render(request, 'registro.html', {'error': "El nombre de usuario debe contener al menos 4 carácteres y la primer letra en mayúscula"})
                     elif len(password1) < 7 or not any(char.isdigit() for char in password1) or not any(index.isupper() for index in password1) or not re.search(r"[~@#_^*%/.+:;=/<>]", password1):
-                        return render(request, 'inderegistro.html', {'error': "Su contraseña debe tener al menos: 7 carácteres y un número, una mayúscula, un carácter especial '~@#_^*%/.+:;=/<>'"})
+                        return render(request, 'registro.html', {'error': "Su contraseña debe tener al menos: 7 carácteres y un número, una mayúscula, un carácter especial '~@#_^*%/.+:;=/<>'"})
                     else:
                         # Generar el código random del correo electrónico
                         def generar_codigo_random():
@@ -110,10 +110,17 @@ def registro(request):
                 return redirect('app')       
             
 def app(request):
-    opciones = ['INVENTARIO', 'DISTRIBUIDORES', 'EMPLEADOS', 'VENTAS', 'PEDIDOS', 'INVENTARIO', 'DISTRIBUIDORES', 'EMPLEADOS', 'VENTAS', 'PEDIDOS',]
-    longitud = len(opciones)  
-    
-    return render(request, 'app.html', {'opciones': opciones, 'longitud': longitud})
+    opciones_urls = {
+    'INVENTARIO': 'INVENTARIO',
+    'DISTRIBUIDORES': 'DISTRIBUIDORES',
+    'EMPLEADOS': 'EMPLEADOS',
+    'VENTAS': 'VENTAS',
+    'PEDIDOS': 'PEDIDOS'
+}
+    context = {
+    'opciones_urls': opciones_urls
+} 
+    return render(request, 'app.html', {**context})
    
 
 

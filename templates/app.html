@@ -19,11 +19,11 @@
         <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-10 col-xs-2 contenedor-desplazable">
                 <div class=" p-2 mb-2 col-lg-8 col-md-12 col-sm-8 col-xs-6">
-                    {% for opcion in opciones %}
+                    {% for key, value in opciones_urls.items %}
                     <div class="card mb-3">
                         <div class="card-body text-center">
-                            <h6 class="card-title">{{ opcion }} <i class="material-icons">attachment</i></h6>
-                            <a href="#" class="btn btn-primary">Seleccionar</a>
+                            <h6 class="card-title">{{ value }} <i class="material-icons">attachment</i></h6>
+                            <a href="{% url key %}" class="btn btn-primary">Seleccionar</a>
                         </div>
                     </div>
                     {% endfor %}

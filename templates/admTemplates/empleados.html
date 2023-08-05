@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Empleados</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+  <link rel="icon" href='{% static "img/logoSYS.png" %}' type="image/x-icon">
+  <link rel="stylesheet" href='{% static "cssCustom/administracion.css" %}'>
+</head>
+
+<body>
+  <p class="regresar"><a href="/app/" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a></p>
+  <div class="container" id="containerBuscador">
+    <h1>Buscar Empleados</h1>
+    <form id="search-form">
+      <div class="input-group flex-nowrap">
+        <span class="input-group-text" id="addon-wrapping">@</span>
+        <input id="search-input" type="text" class="form-control" placeholder="Nombre, Apellido o cargo del empleado"
+          aria-label="Username" aria-describedby="addon-wrapping">
+      </div>
+    </form>
+
+    <table class="table table-success table-striped" id="search-results">
+
+    </table>
+    <!-- Aquí se mostrarán los resultados de la búsqueda en tiempo real -->
+
+  </div>
+  <hr class="separador">
+  <div class="container">
+    <table class="table table-dark table-striped">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">#</th>
+          <th scope="col">Nombres</th>
+          <th scope="col">Apellidos</th>
+          <th scope="col">Cargo</th>
+          <th scope="col">Teléfono</th>
+          <th scope="col">Dirección</th>
+          <th scope="col">Salario</th>
+          <th scope="col">Ingreso</th>
+        </tr>
+      </thead>
+      {% for empleado in empleados %}
+      <tbody>
+        <tr>
+          <th><p><a href="#"
+              class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p> </th>
+          <th scope="row">{{empleado.id}}</th>
+          <td>{{empleado.nombres}}</td>
+          <td>{{empleado.apellidos}}</td>
+          <td>{{empleado.cargo}}</td>
+          <td>{{empleado.telefono}}</td>
+          <td>{{empleado.direccion}}</td>
+          <td>${{empleado.salario}}</td>
+          <td>{{empleado.fecha_ingreso}}</td>
+        </tr>
+      </tbody>
+      {% endfor %}
+    </table>
+  </div>
+
+  <script src='{% static "js/busquedaEmpleado.js" %}'></script>
+</body>

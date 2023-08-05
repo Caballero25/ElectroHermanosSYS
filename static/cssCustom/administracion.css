@@ -1,0 +1,16 @@
+body {
+    background-color: #F6F1F1;
+}
+
+#containerBuscador {
+    text-align: center;
+}
+
+.separador {
+    border-top: 6px double #8c8b8b;
+}
+
+.regresar {
+    margin-top: 10px;
+    margin-left: 10px;
+}
