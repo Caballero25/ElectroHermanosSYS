@@ -69,7 +69,7 @@ function displayResults(employees) {
                     </thead>
                     <tbody>
                         <tr>
-                        <th><p><a href="#" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p></th>
+                        <th><p><a href="/administrar/empleado/${employee.pk}/" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p></th>
                         <th scope="row">${employee.pk}</th>
                         <td>${employee.fields.nombres}</td>
                         <td>${employee.fields.apellidos}</td>

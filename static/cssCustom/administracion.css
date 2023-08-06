@@ -14,3 +14,35 @@ body {
     margin-top: 10px;
     margin-left: 10px;
 }
+
+.imagenDefault {
+    justify-content: center;
+    background-image: url("/static/img/empleadoDefault.png");
+    background-size: cover;
+    height: 140px;
+    width: 140px;
+}
+
+#containerImage {
+    justify-content: center;
+    width: 100%;
+}
+
+#textoForm {
+    text-align: center;
+}
+
+.intangible {
+    pointer-events: none;
+}
+
+
+#opciones {
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.divBoton {
+    justify-content: center;
+    text-align: center;
+}

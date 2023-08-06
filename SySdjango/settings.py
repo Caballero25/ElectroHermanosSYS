@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'SySdjango.User',
     'SySdjango.graficos',
-    'SySdjango.Administracion'
+    'SySdjango.Administracion',
 ]
 
 MIDDLEWARE = [

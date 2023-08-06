@@ -7,8 +7,16 @@ from .models import Empleado
 
 def empleados(request):
     empleados = Empleado.objects.all()
-    return render(request, 'empleados.html', {'empleados':empleados}) 
+    return render(request, '01-empleados.html', {'empleados':empleados}) 
 
+def editarEmpleado(request, empleado_id):
+    empleado = Empleado.objects.get(id=empleado_id)
+    idAdministrador = request.user.id
+    if empleado.administrador.id == idAdministrador:
+        print(empleado)
+        return render(request, '02-editarEmpleado.html', {'empleado': empleado})
+    else:
+        return JsonResponse({'error': 'error'})
 
 def listaEmpleados(_request):
     empleados = Empleado.objects.all()

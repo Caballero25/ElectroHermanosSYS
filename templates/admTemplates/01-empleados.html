@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <p class="regresar"><a href="/app/" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a></p>
+  <p class="regresar"><a href="#" id="botonRegresar" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a></p>
   <div class="container" id="containerBuscador">
     <h1>Buscar Empleados</h1>
     <form id="search-form">
@@ -49,7 +49,7 @@
       {% for empleado in empleados %}
       <tbody>
         <tr>
-          <th><p><a href="#"
+          <th><p><a href="{% url 'editarEmpleado' empleado.id %}"
               class="link-warning link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p> </th>
           <th scope="row">{{empleado.id}}</th>
           <td>{{empleado.nombres}}</td>
@@ -66,4 +66,5 @@
   </div>
 
   <script src='{% static "js/busquedaEmpleado.js" %}'></script>
+  <script src='{% static "js/regresar.js" %}'></script>
 </body>
