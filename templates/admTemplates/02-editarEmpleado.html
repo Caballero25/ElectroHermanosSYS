@@ -13,6 +13,13 @@
 </head>
 
 <body>
+    <div id="miModal" class="modal">
+        <div class="modal-content">
+          <p>¿Quiere realizar estos cambios en el empleado {{empleado.nombres}} {{empleado.apellidos}}?</p>
+          <button id="confirmarSi">Sí</button>
+          <button id="confirmarNo">No</button>
+        </div>
+      </div>
     <p class="regresar"><a href="#" id="botonRegresar"
             class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a>
     </p>
@@ -26,7 +33,7 @@
             <div id="formulario" class="intangible">
                 <div class="container col-xl-6  col-md-6 col-sm-4 col-sm-12">
                     <h2 id="textoForm">Editar Empleado</h2>
-                    <form action="" method="POST">
+                    <form action="/app/" method="POST">
                         {% csrf_token %}
                         <div class="alert alert-danger" role="alert">
                             {{error}}
@@ -69,7 +76,7 @@
                         </div>
 
                         <div id="presentacion" class="divBoton">
-                            <button type="button" class="btn btn-primary btn-sm divBoton py-2">Aplicar cambios</button>
+                            <button type="submit" class="btn btn-primary btn-sm divBoton py-2" id="enviarDatos">Aplicar cambios</button>
                         </div>
                     </form>
                 </div>
@@ -91,6 +98,7 @@
     </div>
     <script src='{% static "js/intangible.js" %}'></script>
     <script src='{% static "js/regresar.js" %}'></script>
+    <script src='{% static "js/advertencia.js" %}'></script>
 </body>
 
 </html>
