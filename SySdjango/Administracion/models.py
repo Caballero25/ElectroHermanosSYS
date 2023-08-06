@@ -11,10 +11,33 @@ class Empleado(models.Model):
     direccion = models.CharField(max_length=200)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
     salario = models.FloatField()
-
+    en_servicio = models.BooleanField(default=True)
+     
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
         return f"Empleado {self.id}: {self.nombres} {self.apellidos} - {self.cargo}"
+    
+class HistorialEmpleado(models.Model):
+    #Datos anteriores
+    ant_nombres = models.CharField(max_length=30)
+    ant_apellidos = models.CharField(max_length=30)
+    ant_cargo = models.CharField(max_length=100)
+    ant_telefono = models.CharField(max_length=20)
+    ant_direccion = models.CharField(max_length=200)
+    ant_salario = models.FloatField()
+    ant_en_servicio = models.BooleanField(default=True)
+    #Datos actualizados
+    act_nombres = models.CharField(max_length=30)
+    act_apellidos = models.CharField(max_length=30)
+    act_cargo = models.CharField(max_length=100)
+    act_telefono = models.CharField(max_length=20)
+    act_direccion = models.CharField(max_length=200)
+    act_salario = models.FloatField()
+    act_en_servicio = models.BooleanField(default=True)
+
+    administrador = models.ForeignKey(User, on_delete=models.CASCADE)
+    def _str_(self):
+        return f"Empleado {self.id}: {self.act_nombres} {self.act_apellidos} - {self.act_cargo}"
 
 
 class Inventario(models.Model):

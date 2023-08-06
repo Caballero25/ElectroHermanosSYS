@@ -16,6 +16,29 @@ body {
     border-radius: 80px;
 }
 
+#imagenError {
+    height: 400px;
+    border-radius: 80px;
+    @media (max-width: 420px) {
+        height: 300px;
+    }
+}
+
+.error {
+    height: auto;
+    text-align: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 25px;
+}
+
+.error p {
+   font-style: italic; 
+   font-size: 20px;
+   font-family: sans-serif;
+}
+
+
 #textIndex {
     padding: 5px;
     font-style: italic;

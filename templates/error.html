@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link type='text/css' rel="stylesheet" href='{% static "cssCustom/index.css" %}'>
+    <link rel="icon" href='{% static "img/logoSYS.png" %}' type="image/x-icon">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div id="presentacion">
+            <div id="imagenError">
+                <img id="imagenError" src='{% static "img/error404.jpg" %}' class="img-fluid border border-primary" alt="...">
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div id="presentacion" class="col-6">
+            <div class="alert alert-danger" role="alert">
+                <p>
+                    <i class="material-icons">lock_outline</i> {{error}}
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
