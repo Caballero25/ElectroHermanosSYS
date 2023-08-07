@@ -34,6 +34,7 @@ class HistorialEmpleado(models.Model):
     act_direccion = models.CharField(max_length=200)
     act_salario = models.FloatField()
     act_en_servicio = models.BooleanField(default=True)
+    fecha_cambio = models.DateTimeField(auto_now_add=True)
 
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
