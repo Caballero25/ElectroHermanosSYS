@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.serializers import serialize
 from django.http.response import JsonResponse
-from .models import Empleado
+from .models import Empleado, HistorialEmpleado
 
 # Create your views here.
 
@@ -29,20 +29,22 @@ def editarEmpleado(request, empleado_id):
             new_apellidos = request.POST['apellidos']
             new_cargo = request.POST['cargo']
             new_direccion = request.POST['direccion']
-            print(request.POST['telefono'])
-            print(type(request.POST['telefono']))
-            print(len(request.POST['telefono']))
+
+            #Validamos el formato ecuatoriano de numero telefónico
+            if request.POST['telefono'][0] != "0" or request.POST['telefono'][1] != "9":
+                print(request.POST['telefono'][0])
+                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': "El número telefónico debe tener el formato ecuatoriano: 09xxxxxxxx, 10 dígitos numéricos empezados por 09"})
 
             try:
                 longitud_telefono = len(request.POST['telefono'])
                 new_telefono = int((request.POST['telefono']))
             except:
                 return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': "Parece que estás tratando de ingresar un texto como número telefónico"})
-
+            new_telefono = "0" + str(new_telefono)
             try:
                 new_salario = float((request.POST['salario']))
             except:
-                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"Parece que estás tratando de ingresar un texto como salario '{request.POST['salario']}'"})
+                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"Parece que estás tratando de ingresar un texto o un dato vacío como salario '{request.POST['salario']}'"})
 
             #Realizamos las validaciones
             if new_nombres == None or new_nombres == "" or new_apellidos == None or new_apellidos == "" or new_cargo == None or new_cargo == "":
@@ -50,21 +52,64 @@ def editarEmpleado(request, empleado_id):
             elif new_telefono == None or new_telefono == "" or new_direccion == None or new_direccion == "" or new_salario == None or new_salario == "" or new_salario == 0:
                 return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': "Ningún dato puede estar vacío"})
             elif  longitud_telefono != 10:
-                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"El número telefónico {new_telefono} parece no tener el formato correcto - 10 dijitos numéricos"})
+                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"El número telefónico 0{new_telefono} parece no tener el formato correcto - 10 dígitos numéricos"})
             elif not isinstance(new_salario, (int, float)):
                 return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"El salario que ingresaste {new_salario} no cumple con el requisito numérico"})
-
-            #Realizamos los cambios
-            empleado.nombres = new_nombres
-            empleado.apellidos = new_apellidos
-            empleado.cargo = new_cargo
-            empleado.telefono = new_telefono
-            empleado.direccion = new_direccion
-            empleado.salario = new_salario
-            return JsonResponse({old_salario: new_salario})
+            else:
+                #Realizamos los cambios
+                empleado.nombres = new_nombres
+                empleado.apellidos = new_apellidos
+                empleado.cargo = new_cargo
+                empleado.telefono = new_telefono
+                empleado.direccion = new_direccion
+                empleado.salario = new_salario
+                empleado.save()
+                #Guardamos el historial
+                nuevoHistorial = HistorialEmpleado.objects.create(
+                        #Datos anteriores
+                    ant_nombres = old_nombres,
+                    ant_apellidos = old_apellidos,
+                    ant_cargo = old_cargo,
+                    ant_telefono = old_telefono,
+                    ant_direccion = old_direccion,
+                    ant_salario = old_salario,
+                        #Datos actualizados
+                    act_nombres = new_nombres,
+                    act_apellidos = new_apellidos,
+                    act_cargo = new_cargo,
+                    act_telefono = new_telefono,
+                    act_direccion = new_direccion,
+                    act_salario = new_salario,
+                        #Responsable de los cambios
+                    administrador = request.user
+                )
+                nuevoHistorial.save()
+                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"Los cambios se realizaron con éxito"})
             
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
+
+
+def despedirEmpleado(request, empleado_id):
+    empleado = Empleado.objects.get(id=empleado_id)
+    idAdministrador = request.user.id
+    if empleado.administrador.id == idAdministrador:
+        empleado.en_servicio = False  #Se marca al empleado como inactivo
+        empleado.save()
+        return redirect('editarEmpleado', empleado_id=empleado_id,)
+    else:
+        return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
+
+def recontratarEmpleado(request, empleado_id):
+    empleado = Empleado.objects.get(id=empleado_id)
+    idAdministrador = request.user.id
+    if empleado.administrador.id == idAdministrador:
+        empleado.en_servicio = True  #Se marca al empleado como inactivo
+        empleado.save()
+        return redirect('editarEmpleado', empleado_id=empleado_id,)
+    else:
+        return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
+
 
 def listaEmpleados(request):
     idAdministrador = request.user.id

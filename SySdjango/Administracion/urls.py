@@ -12,6 +12,8 @@ urlpatterns = [
     ### Rutas CRUD
      #Empleados
     path('administrar/empleado/<int:empleado_id>/', views.editarEmpleado, name="editarEmpleado"),
+    path('despedir/empleado/<int:empleado_id>/', views.despedirEmpleado, name="despedirEmpleado"),
+    path('recontratar/empleado/<int:empleado_id>/', views.recontratarEmpleado, name="recontratarEmpleado"),
 
     #Utilidades Json
     path('listaEmpleados/', views.listaEmpleados, name='listaEmpleados'),
