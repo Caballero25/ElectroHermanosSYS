@@ -88,7 +88,7 @@ def editarEmpleado(request, empleado_id):
                     administrador = request.user
                 )
                 nuevoHistorial.save()
-                return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'error': f"Los cambios se realizaron con éxito"})
+                return redirect('editarEmpleado', empleado_id=empleado_id,)
             
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
