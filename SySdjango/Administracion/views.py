@@ -66,6 +66,34 @@ def editarEmpleado(request, empleado_id):
                 empleado.salario = new_salario
                 empleado.save()
                 #Guardamos el historial
+
+                #Validamos que datos se cambiaron
+                if old_nombres != new_nombres:
+                    cambio_nombres = new_nombres
+                else:
+                    cambio_nombres = "Sin modificaciones"
+                if old_apellidos != new_apellidos:
+                    cambio_apellidos = new_apellidos
+                else:
+                    cambio_apellidos = "Sin modificaciones"
+                if old_cargo != new_cargo:
+                    cambio_cargo = new_cargo
+                else:
+                    cambio_cargo = "Sin modificaciones"
+                if old_telefono != new_telefono:
+                    cambio_telefono = new_telefono
+                else:
+                    cambio_telefono = "Sin modificaciones"
+                if old_direccion != new_direccion:
+                    cambio_direccion = new_direccion
+                else:
+                    cambio_direccion = "Sin modificaciones"
+                if old_salario != new_salario:
+                    cambio_salario = new_salario
+                else:
+                    cambio_salario = "Sin modificaciones"
+                
+
                 nuevoHistorial = HistorialEmpleado.objects.create(
                         #Datos anteriores
                     ant_nombres = old_nombres,
@@ -76,12 +104,12 @@ def editarEmpleado(request, empleado_id):
                     ant_salario = old_salario,
                     ant_en_servicio = en_servicio,
                         #Datos actualizados
-                    act_nombres = empleado.nombres,
-                    act_apellidos = empleado.apellidos,
-                    act_cargo = empleado.cargo,
-                    act_telefono = empleado.telefono,
-                    act_direccion = empleado.direccion,
-                    act_salario = empleado.salario,
+                    act_nombres = cambio_nombres,
+                    act_apellidos = cambio_apellidos,
+                    act_cargo = cambio_cargo,
+                    act_telefono = cambio_telefono,
+                    act_direccion = cambio_direccion,
+                    act_salario = new_salario,
                     act_en_servicio = en_servicio,
                         #Responsable de los cambios
                     id_empleado = empleado,
@@ -108,11 +136,11 @@ def despedirEmpleado(request, empleado_id):
                     ant_salario = empleado.salario,
                     ant_en_servicio = empleado.en_servicio,
                         #Datos actualizados
-                    act_nombres = empleado.nombres,
-                    act_apellidos = empleado.apellidos,
-                    act_cargo = empleado.cargo,
-                    act_telefono = empleado.telefono,
-                    act_direccion = empleado.direccion,
+                    act_nombres = "Sin modificaciones",
+                    act_apellidos = "Sin modificaciones",
+                    act_cargo = "Sin modificaciones",
+                    act_telefono = "Sin modificaciones",
+                    act_direccion = "Sin modificaciones",
                     act_salario = empleado.salario,
                     act_en_servicio = False,
                         #Responsable de los cambios
@@ -140,11 +168,11 @@ def recontratarEmpleado(request, empleado_id):
                     ant_salario = empleado.salario,
                     ant_en_servicio = empleado.en_servicio,
                         #Datos actualizados
-                    act_nombres = empleado.nombres,
-                    act_apellidos = empleado.apellidos,
-                    act_cargo = empleado.cargo,
-                    act_telefono = empleado.telefono,
-                    act_direccion = empleado.direccion,
+                    act_nombres = "Sin modificaciones",
+                    act_apellidos = "Sin modificaciones",
+                    act_cargo = "Sin modificaciones",
+                    act_telefono = "Sin modificaciones",
+                    act_direccion = "Sin modificaciones",
                     act_salario = empleado.salario,
                     act_en_servicio = True,
                         #Responsable de los cambios
