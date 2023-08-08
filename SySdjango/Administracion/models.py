@@ -25,7 +25,7 @@ class HistorialEmpleado(models.Model):
     ant_telefono = models.CharField(max_length=20)
     ant_direccion = models.CharField(max_length=200)
     ant_salario = models.FloatField()
-    ant_en_servicio = models.BooleanField(default=True)
+    ant_en_servicio = models.BooleanField()
     #Datos actualizados
     act_nombres = models.CharField(max_length=30)
     act_apellidos = models.CharField(max_length=30)
@@ -33,9 +33,10 @@ class HistorialEmpleado(models.Model):
     act_telefono = models.CharField(max_length=20)
     act_direccion = models.CharField(max_length=200)
     act_salario = models.FloatField()
-    act_en_servicio = models.BooleanField(default=True)
+    act_en_servicio = models.BooleanField()
     fecha_cambio = models.DateTimeField(auto_now_add=True)
 
+    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
         return f"Empleado {self.id}: {self.act_nombres} {self.act_apellidos} - {self.act_cargo}"

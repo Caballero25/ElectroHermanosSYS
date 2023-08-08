@@ -24,6 +24,7 @@ def editarEmpleado(request, empleado_id):
             old_telefono = empleado.telefono
             old_direccion = empleado.direccion
             old_salario = empleado.salario
+            en_servicio = empleado.en_servicio
             #Obtenemos los nuevos datos del empleado
             new_nombres = request.POST['nombres']
             new_apellidos = request.POST['apellidos']
@@ -73,14 +74,17 @@ def editarEmpleado(request, empleado_id):
                     ant_telefono = old_telefono,
                     ant_direccion = old_direccion,
                     ant_salario = old_salario,
+                    ant_en_servicio = en_servicio,
                         #Datos actualizados
-                    act_nombres = new_nombres,
-                    act_apellidos = new_apellidos,
-                    act_cargo = new_cargo,
-                    act_telefono = new_telefono,
-                    act_direccion = new_direccion,
-                    act_salario = new_salario,
+                    act_nombres = empleado.nombres,
+                    act_apellidos = empleado.apellidos,
+                    act_cargo = empleado.cargo,
+                    act_telefono = empleado.telefono,
+                    act_direccion = empleado.direccion,
+                    act_salario = empleado.salario,
+                    act_en_servicio = en_servicio,
                         #Responsable de los cambios
+                    id_empleado = empleado,
                     administrador = request.user
                 )
                 nuevoHistorial.save()
@@ -94,6 +98,28 @@ def despedirEmpleado(request, empleado_id):
     empleado = Empleado.objects.get(id=empleado_id)
     idAdministrador = request.user.id
     if empleado.administrador.id == idAdministrador:
+        nuevoHistorial = HistorialEmpleado.objects.create(
+                        #Datos anteriores
+                    ant_nombres = empleado.nombres,
+                    ant_apellidos = empleado.apellidos,
+                    ant_cargo = empleado.cargo,
+                    ant_telefono = empleado.telefono,
+                    ant_direccion = empleado.direccion,
+                    ant_salario = empleado.salario,
+                    ant_en_servicio = empleado.en_servicio,
+                        #Datos actualizados
+                    act_nombres = empleado.nombres,
+                    act_apellidos = empleado.apellidos,
+                    act_cargo = empleado.cargo,
+                    act_telefono = empleado.telefono,
+                    act_direccion = empleado.direccion,
+                    act_salario = empleado.salario,
+                    act_en_servicio = False,
+                        #Responsable de los cambios
+                    id_empleado = empleado,
+                    administrador = request.user
+                )
+        nuevoHistorial.save()
         empleado.en_servicio = False  #Se marca al empleado como inactivo
         empleado.save()
         return redirect('editarEmpleado', empleado_id=empleado_id,)
@@ -104,7 +130,29 @@ def recontratarEmpleado(request, empleado_id):
     empleado = Empleado.objects.get(id=empleado_id)
     idAdministrador = request.user.id
     if empleado.administrador.id == idAdministrador:
-        empleado.en_servicio = True  #Se marca al empleado como inactivo
+        nuevoHistorial = HistorialEmpleado.objects.create(
+                        #Datos anteriores
+                    ant_nombres = empleado.nombres,
+                    ant_apellidos = empleado.apellidos,
+                    ant_cargo = empleado.cargo,
+                    ant_telefono = empleado.telefono,
+                    ant_direccion = empleado.direccion,
+                    ant_salario = empleado.salario,
+                    ant_en_servicio = empleado.en_servicio,
+                        #Datos actualizados
+                    act_nombres = empleado.nombres,
+                    act_apellidos = empleado.apellidos,
+                    act_cargo = empleado.cargo,
+                    act_telefono = empleado.telefono,
+                    act_direccion = empleado.direccion,
+                    act_salario = empleado.salario,
+                    act_en_servicio = True,
+                        #Responsable de los cambios
+                    id_empleado = empleado,
+                    administrador = request.user
+                )
+        nuevoHistorial.save()
+        empleado.en_servicio = True  #Se marca al empleado como activo
         empleado.save()
         return redirect('editarEmpleado', empleado_id=empleado_id,)
     else:
