@@ -210,3 +210,8 @@ def listaEmpleados(request):
         empleados_data.append(empleado_data)
 
     return JsonResponse(empleados_data, safe=False)
+
+#Nomina........
+def getNomina(request, empleado_id):
+    json = {'prueba': empleado_id}
+    return render(request, '03-nominaEmpleado.html')

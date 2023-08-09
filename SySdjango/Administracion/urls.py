@@ -14,6 +14,8 @@ urlpatterns = [
     path('administrar/empleado/<int:empleado_id>/', views.editarEmpleado, name="editarEmpleado"),
     path('despedir/empleado/<int:empleado_id>/', views.despedirEmpleado, name="despedirEmpleado"),
     path('recontratar/empleado/<int:empleado_id>/', views.recontratarEmpleado, name="recontratarEmpleado"),
+     #Nomina
+    path('nomina/empleado/<int:empleado_id>/', views.getNomina, name='nominaEmpleado'),
 
     #Utilidades Json
     path('listaEmpleados/', views.listaEmpleados, name='listaEmpleados'),
