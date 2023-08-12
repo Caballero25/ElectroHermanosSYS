@@ -11,8 +11,9 @@ class Empleado(models.Model):
     direccion = models.CharField(max_length=200)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
     salario = models.FloatField()
+    cedula = models.IntegerField()
     en_servicio = models.BooleanField(default=True)
-     
+
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
         return f"Empleado {self.id}: {self.nombres} {self.apellidos} - {self.cargo}"
@@ -41,6 +42,33 @@ class HistorialEmpleado(models.Model):
     def _str_(self):
         return f"Empleado {self.id}: {self.act_nombres} {self.act_apellidos} - {self.act_cargo}"
 
+class DatosTemporalesNomina(models.Model):
+    dias_trabajados = models.IntegerField(default=30)
+    hrs_normales_trabajadas = models.IntegerField(default=8)
+    hrs_nocturnas_trabajadas = models.IntegerField(default=0)
+    hrs_extras_nocturnas = models.IntegerField(default=0)
+    hrs_dominical_trabajadas = models.IntegerField(default=0)
+    hrs_dominical_nocturnas_trabajadas = models.IntegerField(default=0)
+    hrs_semanales_contrato = models.IntegerField(default=40)
+    hrs_extras_normales = models.IntegerField(default=0)
+    pago_mes = models.FloatField(default=0)
+
+    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    administrador = models.ForeignKey(User, on_delete=models.CASCADE)
+    def _str_(self):
+        return f"Empleado {self.id}: {self.act_nombres} {self.act_apellidos} - valor a pagar {self.pago_mes}"
+
+class ConstanciaPago(models.Model):
+    nombres = models.CharField(max_length=30)
+    apellidos = models.CharField(max_length=30)
+    cargo = models.CharField(max_length=100)
+    pago = models.FloatField()
+    fecha_pago = models.DateTimeField(auto_now_add=True)
+
+    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    administrador = models.ForeignKey(User, on_delete=models.CASCADE)
+    def _str_(self):
+        return f"Empleado {self.id}: {self.nombres} {self.apellidos} - valor pagado: {self.pago} en la fecha {self.fecha_pago}"
 
 class Inventario(models.Model):
     nombre_producto = models.CharField(max_length=100)
@@ -86,3 +114,4 @@ class HistorialCompras(models.Model):
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
         return f"Compra #{self.id}: fecha: {self.fecha_compra} | {self.producto_comprado} - {self.marca_producto} - {self.precio_unidad} - {self.unidades_compradas}. Total: ${self.total_compra}"
+    

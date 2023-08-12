@@ -108,18 +108,18 @@
                 <thead>
                     <tr>
                         <th scope="col">Cargo</th>
+                        <th scope="col">H. ext. Normal</th>
                         <th scope="col">Recargo Nocturno</th>
-                        <th scope="col">H. ext. Diurna</th>
                         <th scope="col">H. ext. Nocturna</th>
-                        <th scope="col">H. ext. Domingo Nocturno</th>
-                        <th scope="col">H. ext. Domingo Diurno</th>
+                        <th scope="col">H. Día Dominical</th>
+                        <th scope="col">H. Noche Dominical</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Cargo empleado</td>
-                        <td>35%</td>
                         <td>25%</td>
+                        <td>35%</td>
                         <td>75%</td>
                         <td>110%</td>
                         <td>150%</td>
@@ -129,7 +129,8 @@
             <div id="formulario" class="intangible container" style="min-width: 1079px;">
                 <div class="row">
                     <div class="col-8" >
-                        <form class="row">
+                        <form class="row" action="" method="POST">
+                            {% csrf_token %}
                             <table class="col-6 table-success table-bordered table-striped-columns">
                                 <thead>
                                     <tr>
@@ -142,65 +143,75 @@
                                         <td>
                                             Salario Base
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{empleado.salario}}</label>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Días trabajados
+                                            Días Hábiles / MES
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="30">
+                                                <input name="dias_habiles_mes" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.dias_trabajados}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            HRS. Norms. Trabjds.
+                                            HRS. Norms. / dia.
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="hrs_norms_dia" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_normales_trabajadas}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Nocturnas
+                                            HRS. Nctna / MES
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="hrs_nctna_mes" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_nocturnas_trabajadas}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Diurnas
+                                            H. Ext. Nctna / MES
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="h_ext_nctna_mes" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_extras_nocturnas}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            H. Ext. Nocturna
+                                            HRS. Domcal. / MES
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="hrs_domcal_mes" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_dominical_trabajadas}}">
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            HRS. Domcal. Noctna / MES
+                                        </td>
+                                        <td>
+                                            <div class="mb-3">
+                                                <input name="hrs_domcal_noctna_mes" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_dominical_nocturnas_trabajadas}}">
                                             </div>
                                         </td>
                                     </tr>
@@ -221,19 +232,19 @@
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="hrs_semanales" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_semanales_contrato}}">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            HRS. Extras
+                                            HRS. Norms. Extras
                                         </td>
                                         <td>
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <input name="hrs_norms_extras" type="number" class="form-control"
+                                                    id="inputTelefono" value="{{nomina.hrs_extras_normales}}">
                                             </div>
                                         </td>
                                     </tr>
@@ -241,10 +252,9 @@
                                         <td>
                                             V. Día Base
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{valoresBase.v_dia_base}}</label>
                                             </div>
                                         </td>
                                     </tr>
@@ -252,21 +262,9 @@
                                         <td>
                                             V. Hora Base
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            V. HRS. Diurnas
-                                        </td>
-                                        <td>
-                                            <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{valoresBase.v_hora_base}}</label>
                                             </div>
                                         </td>
                                     </tr>
@@ -274,13 +272,33 @@
                                         <td>
                                             V. HRS. Nocturnas
                                         </td>
-                                        <td>
+                                        <td style="text-align: center;">
                                             <div class="mb-3">
-                                                <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="0">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{valoresBase.v_hora_nocturna}}</label>
                                             </div>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td>
+                                            V. HRS. Dominical
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <div class="mb-3">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{valoresBase.v_hora_dominical}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            V. HRS. Dominical Noct
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <div class="mb-3">
+                                                <label  for="floatingTextareaDisabled" class="form-label">${{valoresBase.v_hora_dominical_nocturno}}</label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
                                 </tbody>
                             </table>
                             <div id="presentacion" class="divBoton" style="margin-top: 5px;">
@@ -301,7 +319,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            123456
+                                            {{nomina.pago_mes}}
                                         </td>
                                     </tr>
                                 </tbody>
@@ -321,7 +339,7 @@
                                             <td style="padding: 10px;">
                                                 <div class="mb-3">
                                                     <input name="salario" type="number" class="form-control"
-                                                        id="inputTelefono" value="{{empleado.salario}}">
+                                                        id="inputTelefono" value="{{empleado.cedula}}">
                                                 </div>
                                                 <button type="button" class="btn btn-light"><a href="#" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Buscar</a></button>
                                             </td>

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.core.serializers import serialize
 from django.http.response import JsonResponse
-from .models import Empleado, HistorialEmpleado
+from .models import Empleado, HistorialEmpleado, DatosTemporalesNomina
 
 # Create your views here.
 
@@ -211,7 +211,78 @@ def listaEmpleados(request):
 
     return JsonResponse(empleados_data, safe=False)
 
+
+
+
 #Nomina........
 def getNomina(request, empleado_id):
     empleado = Empleado.objects.get(id=empleado_id)
-    return render(request, '03-nominaEmpleado.html', {'empleado': empleado})
+    idAdministrador = request.user.id
+    if empleado.administrador.id == idAdministrador:
+        nominaTemporal = DatosTemporalesNomina.objects.get(id=empleado_id)
+        #Valores base salario
+        v_dia_base = round(empleado.salario / 30, 2)
+        v_hora_base = round(v_dia_base / 8, 2)
+        v_hora_normal_ext = round(((v_hora_base * 25) / 100) + v_hora_base , 2)
+        v_hora_nocturna = round(((v_hora_base * 35) / 100) + v_hora_base, 2)
+        v_hora_dominical = round(((v_hora_base * 110) / 100 ) + v_hora_base, 2)
+        v_hora_dominical_nocturno = round(((v_hora_base * 150) / 100 ) + v_hora_base, 2)
+        v_hora_ext_nocturna = round(((v_hora_base * 75) / 100) + v_hora_base, 2)
+        valores_base = {
+            'v_dia_base': v_dia_base,
+            'v_hora_base': v_hora_base,
+            'v_hora_nocturna': v_hora_nocturna,
+            'v_hora_dominical': v_hora_dominical,
+            'v_hora_dominical_nocturno': v_hora_dominical_nocturno
+        }
+
+        if request.method == 'GET':
+            if nominaTemporal.pago_mes == 0:
+                nominaTemporal.pago_mes = empleado.salario
+                nominaTemporal.save()
+            return render(request, '03-nominaEmpleado.html', {'empleado': empleado, 'nomina': nominaTemporal, 'valoresBase': valores_base, 'pagoActual': 100})
+        if request.method == 'POST':
+            Nuevo_Salario = 0
+            try:
+                dias_trabajados = int(request.POST['dias_habiles_mes'])
+                hrs_normales_trabajadas = int(request.POST['hrs_norms_dia'])
+                hrs_nocturnas_trabajadas = int(request.POST['hrs_nctna_mes'])
+                hrs_extras_nocturnas = int(request.POST['h_ext_nctna_mes'])
+                hrs_dominical_trabajadas = int(request.POST['hrs_domcal_mes'])
+                hrs_dominical_nocturnas_trabajadas = int(request.POST['hrs_domcal_noctna_mes'])
+                hrs_semanales_contrato = int(request.POST['hrs_semanales'])
+                hrs_extras_normales = int(request.POST['hrs_norms_extras'])
+            except:
+                return render(request, 'error.html', {'error':"Parece que has introducido letras o datos vacíos en la nómina, por favor reectifica, si crees que se trata de un error por favor comunicate con soporte."})
+            #Actualizamos los datos antiguos de nómina
+            nominaTemporal.dias_trabajados = dias_trabajados
+            nominaTemporal.hrs_normales_trabajadas = hrs_normales_trabajadas
+            nominaTemporal.hrs_nocturnas_trabajadas = hrs_nocturnas_trabajadas
+            nominaTemporal.hrs_extras_nocturnas = hrs_extras_nocturnas
+            nominaTemporal.hrs_dominical_trabajadas = hrs_dominical_trabajadas
+            nominaTemporal.hrs_dominical_nocturnas_trabajadas = hrs_dominical_nocturnas_trabajadas
+            nominaTemporal.hrs_semanales_contrato = hrs_semanales_contrato
+            nominaTemporal.hrs_extras_normales = hrs_extras_normales
+            nominaTemporal.save()
+            #Calculamos los nuevos valores a pagar
+            pago_hrs_normales_trabajadas = (v_hora_base * nominaTemporal.hrs_normales_trabajadas) * nominaTemporal.dias_trabajados
+            pago_hrs_nocturnas_trabajadas = (nominaTemporal.hrs_nocturnas_trabajadas * v_hora_nocturna)
+            pago_hrs_extras_nocturnas = (nominaTemporal.hrs_extras_nocturnas * v_hora_ext_nocturna)
+            pago_hrs_dominical_trabajadas = (nominaTemporal.hrs_dominical_trabajadas * v_hora_dominical)
+            pago_hrs_dominical_nocturnas_trabajadas = (nominaTemporal.hrs_dominical_nocturnas_trabajadas * v_hora_dominical_nocturno)
+            pago_hrs_extras_normales = (nominaTemporal.hrs_extras_normales * v_hora_normal_ext)
+            #Sumamos los nuevos valores a el salario
+            Nuevo_Salario += pago_hrs_normales_trabajadas
+            Nuevo_Salario += pago_hrs_nocturnas_trabajadas
+            Nuevo_Salario += pago_hrs_extras_nocturnas
+            Nuevo_Salario += pago_hrs_dominical_trabajadas
+            Nuevo_Salario += pago_hrs_dominical_nocturnas_trabajadas
+            Nuevo_Salario += pago_hrs_extras_normales
+            nominaTemporal.pago_mes = round(Nuevo_Salario, 2)
+            nominaTemporal.save()
+            return redirect('nominaEmpleado', empleado_id=empleado_id,)
+    else:
+        return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
+    
+
+#Pago automático de nómina
