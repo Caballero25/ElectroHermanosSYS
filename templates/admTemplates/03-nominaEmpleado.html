@@ -85,7 +85,7 @@
             </div>
         </div>
         <div class="row col-12" style="min-width: 1110px;">
-            <table class="table-primary table-bordered table-striped-columns">
+            <table class="table-secondary table-bordered table-striped-columns">
                 <h2 id="textoForm">Editar Nómina</h2>
                 <thead>
                     <tr>
@@ -101,7 +101,7 @@
 
                         </td>
                         <th scope="row">Nombres del empleado:</th>
-                        <th scope="row">Nombres del empleado</td>
+                        <th scope="row">{{empleado.nombres}} {{empleado.apellidos}}</td>
 
                     </tr>
                 </tbody>
@@ -156,18 +156,18 @@
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="30">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Trabajadas
+                                            HRS. Norms. Trabjds.
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
@@ -178,7 +178,7 @@
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
@@ -189,7 +189,7 @@
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
@@ -200,7 +200,7 @@
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
@@ -217,74 +217,74 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            Salario Base
+                                            Hrs. Semanales
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Días trabajados
+                                            HRS. Extras
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Trabajadas
+                                            V. Día Base
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Nocturnas
+                                            V. Hora Base
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            Horas Diurnas
+                                            V. HRS. Diurnas
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            H. Ext. Nocturna
+                                            V. HRS. Nocturnas
                                         </td>
                                         <td>
                                             <div class="mb-3">
                                                 <input name="salario" type="number" class="form-control"
-                                                    id="inputTelefono" value="{{empleado.salario}}">
+                                                    id="inputTelefono" value="0">
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                             <div id="presentacion" class="divBoton" style="margin-top: 5px;">
-                                <button type="submit" class="btn btn-success btn-sm divBoton py-2" id="enviarDatos">Aplicar
+                                <button type="submit" class="btn btn-outline-success btn-sm divBoton py-2" id="enviarDatos">Aplicar
                                     cambios</button>
                             </div>
                             
@@ -337,7 +337,7 @@
         <div class="" id="opciones">
             <div class="row">
                 <div class="col-xl-3 divBoton">
-                    <button type="button" class="btn btn-warning col-8" id="botonEditar">Habilitar
+                    <button type="button" class="btn btn-outline-secondary col-8" id="botonEditar">Habilitar
                         edición</button>
                 </div>
 

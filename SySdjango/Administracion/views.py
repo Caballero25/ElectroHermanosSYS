@@ -109,7 +109,7 @@ def editarEmpleado(request, empleado_id):
                     act_cargo = cambio_cargo,
                     act_telefono = cambio_telefono,
                     act_direccion = cambio_direccion,
-                    act_salario = new_salario,
+                    act_salario = cambio_salario,
                     act_en_servicio = en_servicio,
                         #Responsable de los cambios
                     id_empleado = empleado,
@@ -213,5 +213,5 @@ def listaEmpleados(request):
 
 #Nomina........
 def getNomina(request, empleado_id):
-    json = {'prueba': empleado_id}
-    return render(request, '03-nominaEmpleado.html')
+    empleado = Empleado.objects.get(id=empleado_id)
+    return render(request, '03-nominaEmpleado.html', {'empleado': empleado})
