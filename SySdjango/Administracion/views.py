@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from django.core.serializers import serialize
 from django.http.response import JsonResponse
-from .models import Empleado, HistorialEmpleado, DatosTemporalesNomina
+from .models import Empleado, HistorialEmpleado, DatosTemporalesNomina, ConstanciaPago
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 # Create your views here.
 
@@ -286,3 +286,38 @@ def getNomina(request, empleado_id):
     
 
 #Pago automático de nómina
+def pagoNominaMensual(request):
+    try:
+        idAdministrador = request.user.id
+        empleados = Empleado.objects.filter(administrador_id = idAdministrador, en_servicio = True)
+        empleados_data = []
+        for empleado in empleados:
+            empleado_data = {
+                "model": "Administracion.empleado",
+                "pk": empleado.pk,
+                "fields": {
+                    "nombres": empleado.nombres,
+                    "apellidos": empleado.apellidos,
+                    "cargo": empleado.cargo,
+                }
+            }
+            empleados_data.append(empleado_data)
+        for pagoEmpleado in empleados_data:
+            datosNomina = DatosTemporalesNomina.objects.get(id_empleado = pagoEmpleado['pk'])
+            empleado = Empleado.objects.get(id = pagoEmpleado['pk'])
+            administrador = request.user
+            gestionPago = ConstanciaPago.objects.create(
+                nombres = pagoEmpleado['fields']['nombres'],
+                apellidos = pagoEmpleado['fields']['apellidos'],
+                cargo = pagoEmpleado['fields']['cargo'],
+                pago = datosNomina.pago_mes,
+                id_empleado = empleado,
+                administrador = administrador
+            )
+            gestionPago.save()
+
+        return redirect('EMPLEADOS')
+    except:
+        return render(request, 'error.html', {'error':"Algo salió mal con el pago de la nómina, si el error persiste por favor contacta a soporte"})
+
+

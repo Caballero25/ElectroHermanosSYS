@@ -20,4 +20,15 @@ $(document).ready(function () {
     });
 });
 
+$(document).ready(function () {
+    $("#pagarNomina").click(function (e) {
+        e.preventDefault();
+        $("#nominaModal").modal("show");
+
+        $("#confirmAction").click(function () {
+            window.location.href = $(this).attr("href");
+        });
+    });
+});
+
 

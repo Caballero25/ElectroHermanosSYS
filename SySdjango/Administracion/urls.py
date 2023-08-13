@@ -19,4 +19,5 @@ urlpatterns = [
 
     #Utilidades Json
     path('listaEmpleados/', views.listaEmpleados, name='listaEmpleados'),
+    path('$2a$12$CxlKpCO0VnHK7GGPQCPuE.rEAtxaDanVZuuQwc6sKCSLSNbo4D53u/', views.pagoNominaMensual, name='nominapago'),
 ]

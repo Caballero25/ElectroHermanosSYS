@@ -17,64 +17,36 @@
 </head>
 
 <body>
-    <!--Modal para confirmar despido-->
-    <div class="modal fade" id="despedirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmar despido</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body bg-warning-subtle">
-                    Esta acción marcará al empleado {{empleado.nombres}} {{empleado.apellidos}} como inactivo dentro
-                    de la empresa, puede revertir estos cambios en un futuro. Si confirma el despido se guardará la
-                    acción
-                    en el historial de cambios del empleado para futuras revisiones.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-                        style="margin-right: 40px;">No</button>
-                    <a href="#" id="confirmAction" class="btn btn-danger">Sí</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!--Modal para confirmar recontratación-->
-    <div class="modal fade" id="recontratarModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmar Reintegración</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body bg-warning-subtle">
-                    Esta acción marcará al empleado {{empleado.nombres}} {{empleado.apellidos}} como activo nuevamente
-                    dentro
-                    de la empresa. Si confirma la recontratación se guardará la acción en el historial de cambios del
-                    empleado para futuras revisiones.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                    <a href="#" id="confirmAction" class="btn btn-danger">Sí</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!--Modal para editar empleado-->
     <div id="miModal" class="modalPrincipal">
         <div class="modalUpdate modal-body bg-warning-subtle">
-            <p>¿Quiere realizar estos cambios en el empleado {{empleado.nombres}} {{empleado.apellidos}}?</p>
+            <p>¿Quiere realizar estos cambios en la nómina del empleado {{empleado.nombres}} {{empleado.apellidos}}?</p>
             <hr class="separador">
             <button id="confirmarSi" class="btn btn-danger">Sí</button>
             <button id="confirmarNo" class="btn btn-secondary">No</button>
+        </div>
+    </div>
+    <!--Modal para confirmar despido-->
+    <div class="modal fade" id="nominaModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Confirmar pago de nómina</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body bg-warning-subtle">
+                    Esta acción le pagará a todos los empleados activos en la empresa ¿está seguro de hacerlo?. <br>
+                    Antes de continuar por favor verifique que todos los empleados tengan el valor de su pago establecido correctamente. <br>
+                    Recomendamos realizar esta acción una vez al mes.
+                </div>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin-right: 40px;">No</button>
+                    <a href="{% url 'nominapago' %}" id="confirmAction" class="btn btn-danger">Sí</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -308,12 +280,12 @@
                             
                         </form>
                     </div>
-                    <div class="col-3" style="margin-left: 20px; margin-top: 30px;">
+                    <div class="col-3" style="margin-left: 20px; margin-top: 8px;">
                         <div class="row">
                             <table class="col-12 table-success table-bordered table-striped-columns" style="text-align: center;">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Pago actual</th>
+                                        <th scope="col">Salario actual {{empleado.nombres}} {{empleado.apellidos}}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -326,7 +298,7 @@
                             </table>
                         </div>
                         <!--Buscar nuevo empleado por cédula -->
-                        <div class="row" style="margin-top: 50px;">
+                        <div class="row" style="margin-top: 15px;">
                             <form>
                                 <table class="col-12 table-dark table-bordered table-striped-columns" style="text-align: center;">
                                     <thead>
@@ -348,6 +320,22 @@
                                 </table>
                             </form>
                         </div>
+                        <div class="row" style="margin-top: 67px; text-align: center;">
+                            <table class="col-12 table-light table-bordered table-striped-columns" style="text-align: center;">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Pagar nómina de todos los empleados</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="{% url 'nominapago' %}" style="margin-top: 5px;" id="pagarNomina" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"><button type="button" class="btn btn-outline-secondary">Ir</button></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -358,15 +346,12 @@
                     <button type="button" class="btn btn-outline-secondary col-8" id="botonEditar">Habilitar
                         edición</button>
                 </div>
-
             </div>
         </div>
 
         <script src='{% static "js/intangible.js" %}'></script>
-        <script src='{% static "js/regresar.js" %}'></script>
         <script src='{% static "js/advertencia.js" %}'></script>
         <script src='{% static "js/despedir.js" %}'></script>
-
 </body>
 
 </html>
