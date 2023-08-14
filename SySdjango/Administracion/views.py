@@ -10,8 +10,8 @@ def empleados(request):
     empleados = Empleado.objects.filter(administrador=idAdministrador)
     return render(request, '01-empleados.html', {'empleados':empleados}) 
 
-def editarEmpleado(request, empleado_id):
-    empleado = Empleado.objects.get(id=empleado_id)
+def editarEmpleado(request, empleado_cedula):
+    empleado = Empleado.objects.get(cedula=empleado_cedula)
     idAdministrador = request.user.id
     if empleado.administrador.id == idAdministrador:
         if request.method == 'GET':
@@ -91,7 +91,7 @@ def editarEmpleado(request, empleado_id):
                 if old_salario != new_salario:
                     cambio_salario = new_salario
                 else:
-                    cambio_salario = "Sin modificaciones"
+                    cambio_salario = old_salario
                 
 
                 nuevoHistorial = HistorialEmpleado.objects.create(
@@ -116,7 +116,7 @@ def editarEmpleado(request, empleado_id):
                     administrador = request.user
                 )
                 nuevoHistorial.save()
-                return redirect('editarEmpleado', empleado_id=empleado_id,)
+                return redirect('editarEmpleado', empleado_cedula=empleado_cedula,)
             
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
@@ -150,7 +150,7 @@ def despedirEmpleado(request, empleado_id):
         nuevoHistorial.save()
         empleado.en_servicio = False  #Se marca al empleado como inactivo
         empleado.save()
-        return redirect('editarEmpleado', empleado_id=empleado_id,)
+        return redirect('editarEmpleado', empleado_cedula=empleado.cedula)
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
 
@@ -182,7 +182,7 @@ def recontratarEmpleado(request, empleado_id):
         nuevoHistorial.save()
         empleado.en_servicio = True  #Se marca al empleado como activo
         empleado.save()
-        return redirect('editarEmpleado', empleado_id=empleado_id,)
+        return redirect('editarEmpleado', empleado_cedula=empleado.cedula)
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
 
@@ -196,6 +196,7 @@ def listaEmpleados(request):
         empleado_data = {
             "model": "Administracion.empleado",
             "pk": empleado.pk,
+            "cedula": empleado.cedula,
             "fields": {
                 "nombres": empleado.nombres,
                 "apellidos": empleado.apellidos,
@@ -215,11 +216,11 @@ def listaEmpleados(request):
 
 
 #Nomina........
-def getNomina(request, empleado_id):
-    empleado = Empleado.objects.get(id=empleado_id)
+def getNomina(request, empleado_cedula):
+    empleado = Empleado.objects.get(cedula=empleado_cedula)
     idAdministrador = request.user.id
     if empleado.administrador.id == idAdministrador:
-        nominaTemporal = DatosTemporalesNomina.objects.get(id=empleado_id)
+        nominaTemporal = DatosTemporalesNomina.objects.get(id_empleado=empleado.id)
         #Valores base salario
         v_dia_base = round(empleado.salario / 30, 2)
         v_hora_base = round(v_dia_base / 8, 2)
@@ -242,6 +243,9 @@ def getNomina(request, empleado_id):
                 nominaTemporal.save()
             return render(request, '03-nominaEmpleado.html', {'empleado': empleado, 'nomina': nominaTemporal, 'valoresBase': valores_base, 'pagoActual': 100})
         if request.method == 'POST':
+            if 'busquedaCedula' in request.POST:
+                empleado_cedula = request.POST['busquedaCedula']
+                return redirect('nominaEmpleado', empleado_cedula=empleado_cedula,)
             Nuevo_Salario = 0
             try:
                 dias_trabajados = int(request.POST['dias_habiles_mes'])
@@ -280,7 +284,7 @@ def getNomina(request, empleado_id):
             Nuevo_Salario += pago_hrs_extras_normales
             nominaTemporal.pago_mes = round(Nuevo_Salario, 2)
             nominaTemporal.save()
-            return redirect('nominaEmpleado', empleado_id=empleado_id,)
+            return redirect('nominaEmpleado', empleado_cedula=empleado_cedula,)
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
     

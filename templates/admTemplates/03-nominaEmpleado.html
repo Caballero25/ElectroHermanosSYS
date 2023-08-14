@@ -299,7 +299,8 @@
                         </div>
                         <!--Buscar nuevo empleado por cédula -->
                         <div class="row" style="margin-top: 15px;">
-                            <form>
+                            <form action="{% url 'nominaEmpleado' empleado.cedula %}" method="POST">
+                                {% csrf_token %}
                                 <table class="col-12 table-dark table-bordered table-striped-columns" style="text-align: center;">
                                     <thead>
                                         <tr>
@@ -310,16 +311,18 @@
                                         <tr>
                                             <td style="padding: 10px;">
                                                 <div class="mb-3">
-                                                    <input name="salario" type="number" class="form-control"
-                                                        id="inputTelefono" value="{{empleado.cedula}}">
+                                                    <input name="busquedaCedula" type="number" class="form-control"
+                                                        id="inputTelefono" value="{{empleado.cedula}}" style="text-align: center;">
                                                 </div>
-                                                <button type="button" class="btn btn-light"><a href="#" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">Buscar</a></button>
+                                                <button type="submit" class="btn">Buscar Empleado</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </form>
                         </div>
+                        
+                        
                         <div class="row" style="margin-top: 67px; text-align: center;">
                             <table class="col-12 table-light table-bordered table-striped-columns" style="text-align: center;">
                                 <thead>

@@ -35,7 +35,7 @@ searchInput.addEventListener('input', async (event) => {
         }
 
         const matchingEmployees = data.filter(employee => {
-            const fullName = `${employee.fields.nombres} ${employee.fields.apellidos} ${employee.fields.cargo}`;
+            const fullName = `${employee.fields.nombres} ${employee.fields.apellidos} ${employee.fields.cargo} ${employee.fields.cedula}`;
             return fullName.toLowerCase().includes(searchTerm.toLowerCase());
         });
 
@@ -71,7 +71,7 @@ function displayResults(employees) {
                     </thead>
                     <tbody>
                         <tr>
-                        <th><p><a href="/administrar/empleado/${employee.pk}/" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p></th>
+                        <th><p><a href="/administrar/empleado/${employee.cedula}/" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p></th>
                         <th scope="row">${employee.pk}</th>
                         <td>${employee.fields.nombres}</td>
                         <td>${employee.fields.apellidos}</td>
