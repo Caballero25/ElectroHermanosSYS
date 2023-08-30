@@ -326,10 +326,9 @@ def pagoNominaMensual(request):
             )
             gestionPago.save()
 
-        for empleado in empleados:
-            print(empleado.id)
-            datosNomina = DatosTemporalesNomina.objects.get(id_empleado = empleado.id)
-            print(datosNomina.id)
+        workers_reset = Empleado.objects.filter(administrador_id = idAdministrador)
+        for worker in workers_reset:
+            datosNomina = DatosTemporalesNomina.objects.get(id_empleado = worker.id)
             # Actualiza la instancia desde la base de datos para restaurar los valores por defecto
             datosNomina.dias_trabajados = DatosTemporalesNomina._meta.get_field('dias_trabajados').default
             datosNomina.hrs_normales_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_normales_trabajadas').default
@@ -339,8 +338,7 @@ def pagoNominaMensual(request):
             datosNomina.hrs_dominical_nocturnas_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_dominical_nocturnas_trabajadas').default
             datosNomina.hrs_semanales_contrato = DatosTemporalesNomina._meta.get_field('hrs_semanales_contrato').default
             datosNomina.hrs_extras_normales = DatosTemporalesNomina._meta.get_field('hrs_extras_normales').default
-            datosNomina.pago_mes = DatosTemporalesNomina._meta.get_field('pago_mes').default
-            print(datosNomina.hrs_nocturnas_trabajadas)
+            datosNomina.pago_mes = worker.salario
             # Guarda la instancia actualizada
             datosNomina.save()
 
