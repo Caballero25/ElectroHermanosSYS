@@ -16,7 +16,38 @@
     <link rel="stylesheet" href='{% static "cssCustom/administracion.css" %}'>
 </head>
 
+
 <body>
+    <nav class="navbar navbar-light navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/app/">Home</a>
+          <button  class="navbar-toggler btn-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Inventario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{url 'app'}">Distribuidores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Empleados</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Ventas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Pedidos</a>
+              </li>
+            </ul>
+            <span class="navbar-text">
+              Admin: {{user.username}}
+            </span>
+          </div>
+        </div>
+      </nav>
     <!--Modal para confirmar despido-->
     <div class="modal fade" id="despedirModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
@@ -67,15 +98,14 @@
     <!--Modal para editar empleado-->
     <div id="miModal" class="modalPrincipal">
         <div class="modalUpdate modal-body bg-warning-subtle">
-            <p>¿Quiere realizar estos cambios en el empleado {{empleado.nombres}} {{empleado.apellidos}}?</p>
+            <p>¿Quiere realizar estos cambios en el empleado {{empleado.nombres}} {{empleado.apellidos}}?<hr>
+            Si realizó cambios en el salario es necesario que presione el boton <br>['Aplicar cambios'] <br>en la nómina del empleado para refrescar cambios.</p>
             <hr class="separador">
             <button id="confirmarSi" class="btn btn-danger">Sí</button>
             <button id="confirmarNo" class="btn btn-secondary">No</button>
         </div>
     </div>
-    <p class="regresar"><a href="#" id="botonRegresar"
-            class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a>
-    </p>
+
     <div class="container">
         <div class="row col-12" id="containerImage">
             <div class="imagenDefault">
@@ -159,10 +189,126 @@
 
         </div>
     </div>
+    <hr class="separador" style="margin-top: 50px;">
+    <div class="container align-items-center">   
+        <h3 class="col-12 text-center">Historial de cambios del empleado</h3>
+        <table class="table table-dark table-striped-columns" id="containerImage">
+            <thead>
+                <tr>
+                    <th>
+                    
+                    </th>
+                    <th>
+                        Nombres
+                    </th>
+                    <th>
+                        Apellidos
+                    </th>
+                    <th>
+                        Cargo
+                    </th>
+                    <th>
+                        Telefono
+                    </th>
+                    <th>
+                        Dirección
+                    </th>
+                    <th>
+                        Salario
+                    </th>
+                    <th>
+                        En servicio
+                    </th>
+                    <th>
+                        Fecha de cambio
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for historia in historial %}
+                    <tr>
+                        <th>
+                            Anterior
+                        </th>
+                        <td>
+                            {{historia.ant_nombres}}
+                        </td>
+                        <td>
+                            {{historia.ant_apellidos}}
+                        </td>
+                        <td>
+                            {{historia.ant_cargo}}
+                        </td>
+                        <td>
+                            {{historia.ant_telefono}}
+                        </td>
+                        <td>
+                            {{historia.ant_direccion}}
+                        </td>
+                        <td>
+                            {{historia.ant_salario}}
+                        </td>
+                        <td>
+                            {{historia.ant_en_servicio}}
+                        </td>
+                        <td>
+                            {{historia.fecha_cambio}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Nuevo
+                        </th>
+                        <td>
+                            {{historia.act_nombres}}
+                        </td>
+                        <td>
+                            {{historia.act_apellidos}}
+                        </td>
+                        <td>
+                            {{historia.act_cargo}}
+                        </td>
+                        <td>
+                            {{historia.act_telefono}}
+                        </td>
+                        <td>
+                            {{historia.act_direccion}}
+                        </td>
+                        <td>
+                            {{historia.act_salario}}
+                        </td>
+                        <td>
+                            {{historia.act_en_servicio}}
+                        </td>
+                        <td>
+                            {{historia.fecha_cambio}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
     <script src='{% static "js/intangible.js" %}'></script>
     <script src='{% static "js/regresar.js" %}'></script>
     <script src='{% static "js/advertencia.js" %}'></script>
     <script src='{% static "js/despedir.js" %}'></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

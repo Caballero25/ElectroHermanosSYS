@@ -111,9 +111,9 @@ def registro(request):
             
 def app(request):
     opciones_urls = {
+    'EMPLEADOS': 'EMPLEADOS',
     'INVENTARIO': 'INVENTARIO',
     'DISTRIBUIDORES': 'DISTRIBUIDORES',
-    'EMPLEADOS': 'EMPLEADOS',
     'VENTAS': 'VENTAS',
     'PEDIDOS': 'PEDIDOS'
 }

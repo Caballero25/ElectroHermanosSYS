@@ -14,8 +14,9 @@ def editarEmpleado(request, empleado_cedula):
     empleado = Empleado.objects.get(cedula=empleado_cedula)
     idAdministrador = request.user.id
     if empleado.administrador.id == idAdministrador:
+        historialEmpleado = HistorialEmpleado.objects.filter(id_empleado = empleado.id)
         if request.method == 'GET':
-            return render(request, '02-editarEmpleado.html', {'empleado': empleado})
+            return render(request, '02-editarEmpleado.html', {'empleado': empleado, 'historial': historialEmpleado})
         else:
             #Obtenemos los datos anteriores del empleado:
             old_nombres = empleado.nombres
@@ -116,7 +117,10 @@ def editarEmpleado(request, empleado_cedula):
                     administrador = request.user
                 )
                 nuevoHistorial.save()
-                return redirect('editarEmpleado', empleado_cedula=empleado_cedula,)
+                if old_salario != new_salario:
+                    return redirect('nominaEmpleado', empleado_cedula=empleado_cedula,)
+                else:
+                    return redirect('editarEmpleado', empleado_cedula=empleado_cedula,)
             
     else:
         return render(request, 'error.html', {'error':"Parece que has tratado de acceder a un dato que no es de tu dominio, si crees que es un error contacta a soporte"})
@@ -241,6 +245,8 @@ def getNomina(request, empleado_cedula):
             if nominaTemporal.pago_mes == 0:
                 nominaTemporal.pago_mes = empleado.salario
                 nominaTemporal.save()
+            else:
+                nominaTemporal.pago_mes = nominaTemporal.pago_mes
             return render(request, '03-nominaEmpleado.html', {'empleado': empleado, 'nomina': nominaTemporal, 'valoresBase': valores_base, 'pagoActual': 100})
         if request.method == 'POST':
             if 'busquedaCedula' in request.POST:
@@ -319,6 +325,24 @@ def pagoNominaMensual(request):
                 administrador = administrador
             )
             gestionPago.save()
+
+        for empleado in empleados:
+            print(empleado.id)
+            datosNomina = DatosTemporalesNomina.objects.get(id_empleado = empleado.id)
+            print(datosNomina.id)
+            # Actualiza la instancia desde la base de datos para restaurar los valores por defecto
+            datosNomina.dias_trabajados = DatosTemporalesNomina._meta.get_field('dias_trabajados').default
+            datosNomina.hrs_normales_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_normales_trabajadas').default
+            datosNomina.hrs_nocturnas_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_nocturnas_trabajadas').default
+            datosNomina.hrs_extras_nocturnas = DatosTemporalesNomina._meta.get_field('hrs_extras_nocturnas').default
+            datosNomina.hrs_dominical_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_dominical_trabajadas').default
+            datosNomina.hrs_dominical_nocturnas_trabajadas = DatosTemporalesNomina._meta.get_field('hrs_dominical_nocturnas_trabajadas').default
+            datosNomina.hrs_semanales_contrato = DatosTemporalesNomina._meta.get_field('hrs_semanales_contrato').default
+            datosNomina.hrs_extras_normales = DatosTemporalesNomina._meta.get_field('hrs_extras_normales').default
+            datosNomina.pago_mes = DatosTemporalesNomina._meta.get_field('pago_mes').default
+            print(datosNomina.hrs_nocturnas_trabajadas)
+            # Guarda la instancia actualizada
+            datosNomina.save()
 
         return redirect('EMPLEADOS')
     except:
