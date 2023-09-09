@@ -61,3 +61,108 @@ body {
  }
 
 
+/*BANNER*/
+.tituloBanner {
+    margin: 0;
+    padding: 0;
+    font-size: 32px; /* Tamaño de fuente */
+}
+
+/* Estilos para el banner */
+.bannerAPP {
+    background-color: #007BFF; /* Color de fondo del banner */
+    color: white; /* Color del texto */
+    text-align: center; /* Centrar el texto horizontalmente */
+    padding: 10px; /* Espaciado interno */
+    border-bottom: 2px solid black;
+}
+
+
+
+
+
+ /* APP OPTIONS */
+ /*TARJETAS STYLES */
+.contenedor-cartas-padre {
+    margin-top: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor-cartas {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.carta {
+    background-color: #1b004b;
+    width: 50%;
+    padding: 20px;
+    border-right: 1px solid white;
+}
+
+.carta a {
+    align-items: center;
+    text-align: center;
+}
+
+.content-carta {
+    padding: 40px;
+    min-height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: solid 1px black;
+    box-shadow: 5px 6px 10px rgba(51, 90, 118, 0.7);
+    background-color: white;
+}
+
+@media only screen and (max-width: 1200px) {
+    .content-cartas {
+        min-height: 300px;
+    }
+    }
+
+@media only screen and (max-width: 815px) {
+    .carta {
+        width: 80%;
+    }
+    .contenedor-cartas {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;  
+    }
+    }
+    
+
+.carta img {
+    width: 90px;
+}
+
+.carta h4 {
+    text-align: center;
+}
+
+.carta p {
+    margin-top: 10px;
+    text-align: justify;
+}
+
+.findEmpleado {
+    border: 2px solid black;
+    transition: transform 0.2s ease; 
+}
+
+.findEmpleado:hover {
+    transform: scale(1.1); 
+}
+
+

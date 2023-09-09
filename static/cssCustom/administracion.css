@@ -3,6 +3,7 @@ body {
 }
 
 #containerBuscador {
+    margin-top: 30px;
     text-align: center;
 }
 
@@ -78,4 +79,32 @@ body {
   }
 
 
+/*BANNER*/
+.tituloBanner {
+    margin: 0;
+    padding: 0;
+    font-size: 32px; /* Tamaño de fuente */
+}
+
+/* Estilos para el banner */
+.bannerAPP {
+    background-color: #007BFF; /* Color de fondo del banner */
+    color: white; /* Color del texto */
+    text-align: center; /* Centrar el texto horizontalmente */
+    padding: 10px; /* Espaciado interno */
+    border-bottom: 2px solid black;
+}
+
+.marginInicio {
+    margin-top: 30px;
+}
+
+/*Imagen contrato*/
   
+.imagenContrato {
+    justify-content: center;
+    background-image: url("/static/img/contrato.png");
+    background-size: cover;
+    height: 140px;
+    width: 140px;
+}
