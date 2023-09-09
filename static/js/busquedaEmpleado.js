@@ -57,7 +57,7 @@ function displayResults(employees) {
                     <thead>
                         <tr>
                             <th scope="col"></th>
-                            <th scope="col">#</th>
+                            
                             <th scope="col">Nombres</th>
                             <th scope="col">Apellidos</th>
                             <th scope="col">Cargo</th>
@@ -72,7 +72,7 @@ function displayResults(employees) {
                     <tbody>
                         <tr>
                         <th><p><a href="/administrar/empleado/${employee.cedula}/" class="link-danger link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Editar</a></p></th>
-                        <th scope="row">${employee.pk}</th>
+                        
                         <td>${employee.fields.nombres}</td>
                         <td>${employee.fields.apellidos}</td>
                         <td>${employee.fields.cargo}</td>

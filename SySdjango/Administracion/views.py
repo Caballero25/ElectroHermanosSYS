@@ -353,12 +353,53 @@ def contratar(request):
     if request.method == 'GET':
         return render(request, 'contratarEmpleado.html')
     else:
-        nombres = request.POST['']
-        apellidos = request.POST['']
-        cargo = request.POST['']
-        telefono = request.POST['']
-        direccion = request.POST['']
-        salario = request.POST['']
-        cedula = request.POST['']
-        diaslaborales = request.POST['']
+        nombres = request.POST['nombres']
+        apellidos = request.POST['apellidos']
+        cargo = request.POST['cargo']
+        telefono = request.POST['telefono']
+        direccion = request.POST['direccion']
+        salario = request.POST['salario']
+        cedula = request.POST['cedula']
+        diaslaborales = request.POST['diaslaborales']
+
+        dataArray = [nombres, apellidos, cargo, telefono, direccion, salario, cedula, diaslaborales]
+
+        for i in range(0, len(dataArray)-1):
+            if dataArray[i] == None or dataArray[i] == "":
+                return render(request, 'contratarEmpleado.html', {'error': 'Ningún dato puede estar vacío'})
+        
+        try: 
+            salario = int(salario)
+            cedula = int(cedula)
+        except:
+            return render(request, 'contratarEmpleado.html', {'error': 'Trataste de agregar una letra como número'})
+        
+        salario = "0" + str(salario)
+        
+        agregarEmpleado = Empleado.objects.create(
+            nombres = nombres,
+            apellidos = apellidos,
+            cargo = cargo,
+            telefono = telefono,
+            direccion = direccion,
+            salario = salario,
+            cedula = cedula,
+            administrador = request.user
+        )
+        agregarEmpleado.save()
+
+
+        agregarNomina = DatosTemporalesNomina.objects.create(
+            dias_trabajados = diaslaborales,
+            pago_mes = salario,
+            id_empleado = agregarEmpleado,
+            administrador = request.user
+        )
+        agregarNomina.save()
+        
+        return redirect('EMPLEADOS')
+
+        
+        
+        
         

@@ -11,7 +11,7 @@ class Empleado(models.Model):
     direccion = models.CharField(max_length=200)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
     salario = models.FloatField()
-    cedula = models.IntegerField()
+    cedula = models.IntegerField(unique=True)
     en_servicio = models.BooleanField(default=True)
 
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -53,7 +53,7 @@ class DatosTemporalesNomina(models.Model):
     hrs_extras_normales = models.IntegerField(default=0)
     pago_mes = models.FloatField(default=0)
 
-    id_empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
+    id_empleado = models.OneToOneField(Empleado, on_delete=models.CASCADE)
     administrador = models.ForeignKey(User, on_delete=models.CASCADE)
     def _str_(self):
         return f"Empleado {self.id}: {self.act_nombres} {self.act_apellidos} - valor a pagar {self.pago_mes}"
