@@ -64,15 +64,15 @@ def registro(request):
                         codigo_random = str(generar_codigo_random())
 
                         def enviar_email():
-                            nombre_sistema = "SySDjango"
-                            correo_sistema = 'sabrositoRte@gmail.com'
+                            nombre_sistema = "EmpliData Django"
+                            correo_sistema = 'IngreseCorreoValido@gmail.com'
                             # Mensaje del correo
                             mensaje = f"""Hola. \n
                             Te damos la bienvenida al sistema de administracion SySDjango. \n
                             Para confirmar tu registro por favor escriba el codigo que esta escrito a continuacion 
                             en su formulario de validacion dentro de la pagina web \n\n
                             {codigo_random} \n\n
-                            Si usted no ha solicitado el registro en SySDjango, por favor ignore este correo electronico \n\n\n\n
+                            Si usted no ha solicitado el registro en EmpliData, por favor ignore este correo electronico \n\n\n\n
                             SySDjango - David Caballero
                             """
                             # Asunto del correo
