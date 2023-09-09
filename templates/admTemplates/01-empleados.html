@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <p class="regresar"><a href="#" id="botonRegresar" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">&#8617;Regresar</a></p>
+  {% include 'banner.html' %}
   <div class="container" id="containerBuscador">
     <h1>Buscar Empleados</h1>
     <form id="search-form">
@@ -76,5 +76,4 @@
   </div>
 
   <script src='{% static "js/busquedaEmpleado.js" %}'></script>
-  <script src='{% static "js/regresar.js" %}'></script>
 </body>

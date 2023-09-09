@@ -15,38 +15,42 @@
 </head>
 
 <body>
-    <div class="appContainer" style="margin: 20px;">
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-10 col-xs-2 contenedor-desplazable">
-                <div class=" p-2 mb-2 col-lg-8 col-md-12 col-sm-8 col-xs-6">
-                    {% for key, value in opciones_urls.items %}
-                    <div class="card mb-3">
-                        <div class="card-body text-center">
-                            <h6 class="card-title">{{ value }} <i class="material-icons">attachment</i></h6>
-                            <a href="{% url key %}" class="btn btn-primary">Seleccionar</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="col-lg-8 col-md-8 col-sm-12">
-                <div class="col">
-                    <div class="col">
-                        <div class="mb-3">
-                            <div id="chart" class="chart"></div>
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="col">
-                        <div class="mb-3">
-                            <div id="chart2" class="chart"></div>
-                        </div>
+        <!--Inicio Cartas-->
+        {% include 'banner.html' %}
+        <div class="contenedor-cartas-padre" id="metodologia">
+            <div class="contenedor-cartas">
+                <div class="carta">
+                    <div class="content-carta">
+                        <a  href="{% url 'EMPLEADOS' %}">
+                            <img src='{% static "img/findEmpleado.jpg" %}' class="findEmpleado">
+                            <h4>Administrar Empleados</h4>
+                        </a>
+                        <p> <ul class="list-group">
+                            <li class="list-group-item">Busqueda de empleados</li>
+                            <li class="list-group-item">Editar datos de empleado</li>
+                            <li class="list-group-item">Despedir empleado</li>
+                            <li class="list-group-item">Editar nómina</li>
+                            <li class="list-group-item">Pago de nómina</li>
+                          </ul></p>
                     </div>
                 </div>
+    
+                <div class="carta">
+                    <div class="content-carta">
+                        <a  href="{% url 'addEmpleados' %}">
+                            <img src='{% static "img/newemploye.jpg" %}' class="findEmpleado">
+                            <h4>Contratar Empleados</h4>
+                        </a>
+                        <p> <ul class="list-group">
+                            <li class="list-group-item">Integrar Empleado</li>
+                            <li class="list-group-item">Añadir nómina</li>
+                            <li class="list-group-item">Datos personales</li>
+                            <li class="list-group-item">Registro social</li>
+                            <li class="list-group-item">Cargo</li>
+                          </ul></p>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
