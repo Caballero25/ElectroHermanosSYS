@@ -347,3 +347,18 @@ def pagoNominaMensual(request):
         return render(request, 'error.html', {'error':"Algo salió mal con el pago de la nómina, si el error persiste por favor contacta a soporte"})
 
 
+#CONTRATAR EMPLEADOS...........
+
+def contratar(request):
+    if request.method == 'GET':
+        return render(request, 'contratarEmpleado.html')
+    else:
+        nombres = request.POST['']
+        apellidos = request.POST['']
+        cargo = request.POST['']
+        telefono = request.POST['']
+        direccion = request.POST['']
+        salario = request.POST['']
+        cedula = request.POST['']
+        diaslaborales = request.POST['']
+        
